@@ -1,0 +1,2 @@
+useDynLib(Segmentor3IsBack)
+exportPattern("^[[:alpha:]]+")
