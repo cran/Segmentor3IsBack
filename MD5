@@ -1,9 +1,9 @@
-553193ef1538de885ab5785185bc8fee *DESCRIPTION
+ae93c8df8d55c1e9f0b9bf91ed8da507 *DESCRIPTION
 ba0deffb186e2c2f13328191284c2907 *NAMESPACE
 bbcb40360120decbecafd2087ef4d575 *R/Segmentor3IsBack.R
 d030b82e32477f5e844e738d4c480e5a *R/zzz.r
 61aeb971547e9da84447ff49e2521976 *man/Segmentor.Rd
-ba6b603a8c0f68c2caf844240436c7f4 *src/BinNegative.cpp
+fd7f84e1dac477b4790df51123a21a9b *src/BinNegative.cpp
 20b0bcb274a5ed96b7cb1612bf882c41 *src/BinNegative.h
 e7fe57e4b8c35da62f96dfdb189a4a7e *src/CallSegmentor.cpp
 81d192641f5d80e5dd63667eb39f4a57 *src/CallSegmentor.h
@@ -17,7 +17,7 @@ f0037ef6a1a2ab84df6751371cd8441c *src/GeneralFunctionsDeclarations.h
 292c115afcb967bd97abac2f06b03680 *src/MyVector.h
 98fa2d20d4c1d5853e1b0cdea6c375f4 *src/Observations.cpp
 9388acf54358f8ab0f8a7a7f61727560 *src/Observations.h
-7efb3dad821fc5debdb358aa0d366122 *src/Poisson.cpp
+cdd7749ecfefc1f876066c988c38fda6 *src/Poisson.cpp
 a029ceba21030c003f93eab93495a72c *src/Poisson.h
 daf29c41d45b521348f4e6448499cf6d *src/PrunedSeg.cc
 453fa7ce6ac55bfbe81b7af34ed2b0e2 *src/Segment.cpp

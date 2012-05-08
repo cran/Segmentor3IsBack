@@ -100,7 +100,7 @@ void BinNegative::SpecializeMe(int Y)
   FirstElementSpecified = true;
   if (Y!=0)
     for(int i=0; i<Y; i++)
-      A+=log(i+1)-log(T+i);
+      A+=log((double) (i+1))-log((double) (T+i));
 
 }
 

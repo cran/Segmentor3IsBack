@@ -59,7 +59,7 @@ void Poisson::SpecializeMe(int Y)
   FirstElementSpecified = true;
   for(int i = 0; i < Y; i++)
 	{
-		A += log(i+1);
+		A += log((double) (i+1));
 	}
 }
 

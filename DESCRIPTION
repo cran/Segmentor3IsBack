@@ -1,5 +1,5 @@
 Package: Segmentor3IsBack
-Version: 1.1
+Version: 1.2
 Date: 2012-05-08
 Title: A Fast Segmentation Algorithm
 Author: Alice Cleynen, Guillem Rigaill, Michel Koskas
@@ -10,6 +10,6 @@ Description: This package performs a fast exact segmentation on data
 License: GPL (>= 2)
 Repository: CRAN
 Repository/R-Forge/Project: segmentor3isbac
-Repository/R-Forge/Revision: 11
-Packaged: 2012-07-09 18:27:28 UTC; rforge
-Date/Publication: 2012-07-10 05:46:12
+Repository/R-Forge/Revision: 13
+Packaged: 2012-07-11 22:22:07 UTC; rforge
+Date/Publication: 2012-07-16 09:09:05
