@@ -12,14 +12,14 @@
 
 #include "Constants.h"
 #include "MyVector.h"
-#include "Sets.h"
+//#include "Sets.h"
 #include <iostream>
 
 using namespace std;
 
 class MultiSegment;
 
-class Segment : public AtomicSet
+class Segment //: public AtomicSet
 {
 private:
 	bool LeftBoundIncluded;

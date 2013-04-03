@@ -36,7 +36,6 @@ public:
   Observations();
   Observations(MyVector<T> &v);
   Observations(MyVector<int> &v, bool t=true);
-
   void MeanVarSubsection(int start, int end, double* m, double* v);
   void ComputeMinMax();
   void ComputeMeanVar();

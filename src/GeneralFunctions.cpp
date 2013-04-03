@@ -25,15 +25,6 @@ bool IsDigit(char &x)
   return true;
 }
 
-
-int GetRandomNumber(int MinValue, int MaxValue)
-{
-  long int x = rand();
-  double y = (MaxValue - MinValue + 1) * ((double) x) / RAND_MAX;
-  int Res = MinValue + y;
-  return Res;
-}
-
 MyVector<int> IntersectLists(const MyVector<int> &A, const MyVector<int> &B)
 {
 	MyVector<int> Res;

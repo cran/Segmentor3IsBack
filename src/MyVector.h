@@ -178,7 +178,7 @@ template<typename T>
 MyVector<T>::MyVector(unsigned int S, const T &Value)
 {
 	MyData = new T[S];
-	Capacity = S;
+	Capacity = 2*S;
 	Size = S;
 	for (unsigned int i = 0; i < Size; i++)
 		MyData[i] = Value;
@@ -190,7 +190,7 @@ void MyVector<T>::push_back(const T &NewData)
 	if (Size == Capacity)
 	{
 		if (Capacity == 0)
-			Capacity = 100;
+			Capacity = 2;
 		T *NewArray = new T[2 * Capacity];
 		for (unsigned int i = 0; i < Size; i++)
 			NewArray[i] = MyData[i];

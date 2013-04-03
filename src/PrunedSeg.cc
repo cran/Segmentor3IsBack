@@ -29,4 +29,28 @@ extern "C"
     CallSegmentorVariance(Size, KMax, mu, Data, Breakpoints, Parameters, Likelihood);
     return;
   }
+  
+  void SegmentPoissonKeep(int *Size, int *KMax, int *Data, int *Breakpoints, double *Parameters, double *Likelihood,double *Cost, int *Pos)
+  {
+    CallSegmentorPoissonKeep(Size, KMax, Data, Breakpoints, Parameters, Likelihood, Cost, Pos);
+    return;
+  }
+
+  void SegmentBinNegKeep(int *Size, int *KMax, double *theta, int *Data, int *Breakpoints, double *Parameters, double *Likelihood,double *Cost, int *Pos)
+  {
+    CallSegmentorBinNegKeep(Size, KMax, theta, Data, Breakpoints, Parameters, Likelihood, Cost, Pos);
+    return;
+  }
+
+  void SegmentNormalKeep(int *Size, int *KMax, double *Data, int *Breakpoints, double *Parameters, double *Likelihood,double *Cost, int *Pos)
+  {
+    CallSegmentorNormalKeep(Size, KMax, Data, Breakpoints, Parameters, Likelihood, Cost, Pos);
+    return;
+  }
+
+  void SegmentVarianceKeep(int *Size, int *KMax, double *mu, double *Data, int *Breakpoints, double *Parameters, double *Likelihood,double *Cost, int *Pos)
+  {
+    CallSegmentorVarianceKeep(Size, KMax, mu, Data, Breakpoints, Parameters, Likelihood, Cost, Pos);
+    return;
+  }
 }

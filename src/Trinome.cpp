@@ -142,18 +142,10 @@ MultiSegment *Trinome::LowerThanZero(MultiSegment &S)
 {
 	if (a2 != 0)
 	{
-		bool SignChanged = false;
-		if (a2 < 0)
-		{
-			SignChanged = true;
-			*this *= -1;
-		}
 		double TheMin = (*this)(-a1/(2*a2));
 		if (TheMin > 0)
 		{
 			MultiSegment *Sp = new MultiSegment(true);
-			if (SignChanged)
-				*this *= -1;
 			return Sp;
 		}
 		double Delta, FirstRoot, SecondRoot;
@@ -164,8 +156,6 @@ MultiSegment *Trinome::LowerThanZero(MultiSegment &S)
 		Segment AuxS(FirstRoot, SecondRoot);
 		MultiSegment *Answer = new MultiSegment(AuxS);
 		Answer->SelfIntersect(&S);
-		if (SignChanged)
-			*this *= -1;
 		return Answer;
 	}
 	if (a1 != 0)

@@ -1,6 +1,5 @@
 .onAttach <- function(lib, pkg) {
-    library.dynam("Segmentor3IsBack", pkg, lib)
-    packageStartupMessage("Segmentor3IsBack Loaded \n")
+    packageStartupMessage("Segmentor3IsBack v1.4 Loaded \n")
    
     
 }

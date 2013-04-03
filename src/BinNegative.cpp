@@ -46,8 +46,6 @@ void BinNegative::ResetMe(double t, int Y)
   S = Y;
   FirstElement = Y;
   FirstElementSpecified = true;
-  for(double i=0; i<Y; i++)
-     A+=log(i+1)-log(T+i);
 }
 
 void BinNegative::ResetMe(double a, double s, double t)
@@ -98,9 +96,6 @@ void BinNegative::SpecializeMe(int Y)
   A = 0;
   S = Y;
   FirstElementSpecified = true;
-  if (Y!=0)
-    for(int i=0; i<Y; i++)
-      A+=log((double) (i+1))-log((double) (T+i));
 
 }
 
@@ -108,9 +103,6 @@ void BinNegative::SpecializeMe(int Y)
 double BinNegative::operator()(int y, double mu)
 {
   double Ap = 0;
-  if (y!=0)
-    for(double i = 0; i < y; i++)
-      Ap += log(i+1)-log(T+i);
   if (mu == 0)
     {
        if (y == 0)

@@ -1,2 +1,20 @@
 useDynLib(Segmentor3IsBack)
 exportPattern("^[[:alpha:]]+")
+
+export(	Segmentor,
+	SelectModel)
+
+exportClasses( Segmentor)
+
+exportMethods(
+		show,
+		getData,
+		getModel,
+		getKmax,
+		getOverdispersion,
+		getMean,
+		getBreaks,
+		getParameters,
+		getLikelihood,
+		getCost
+)

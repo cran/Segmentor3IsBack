@@ -286,6 +286,7 @@ MultiSegment::MultiSegment(bool EmptySet)
     }
   Segment I;
   MySegments.push_back(I);
+  //MySegments.Capacity = 10;
 }
 
 MultiSegment::MultiSegment(MultiSegment &S)

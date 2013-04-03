@@ -15,7 +15,8 @@
 #include <iostream>
 
 #include "Function.h"
-#include "Sets.h"
+//#include "Sets.h"
+#include "Segment.h"
 #include <math.h>
 #include "Constants.h"
 #include "Observations.h"
@@ -23,8 +24,7 @@
 #include "MyVector.h"
 #include "GeneralFunctions.h"
 
-
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
 class Segmentor
 {
 // Fields
@@ -35,7 +35,7 @@ private:
   double **Par;
   int **M;
   int n;
-	SetTypeName MySet;
+	MultiSegment MySet;
   SumOfFunctionsTypeName g;
   FunctionTypeName gamma;
 
@@ -44,16 +44,16 @@ private:
 
 	// setter and getter for all of them
 public:
-  //unsigned int sizeof(SumOfFunctionsTypeName *H, SetTypeName *S, SetTypeName *I, MyVector<int> Candidates, MyVector<int> CandidatesToRemove);
+
   int **GetM() const;
   int Getn() const;
   int GetK() const;
   double **GetC() const;
   double **GetPar() const;
   Segmentor();
-  Segmentor(Observations<DataTypeName>  &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, SetTypeName *MS);
+  Segmentor(Observations<DataTypeName>  &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, MultiSegment *MS);
   ~Segmentor();
-  void Initialize(Observations<DataTypeName>  &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, SetTypeName *MS);
+  void Initialize(Observations<DataTypeName>  &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, MultiSegment *MS);
   int ChoosekBreak(double rup);
 private:
 	// call only by the constructor
@@ -61,8 +61,8 @@ private:
 };
 
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::~Segmentor()
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::~Segmentor()
 {
   for (int i = 0; i < K; i++)
     delete[] M[i];
@@ -77,9 +77,8 @@ Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, Da
 }
 
 
-
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::ChoosekBreak(double rup)
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+int Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::ChoosekBreak(double rup)
 {
   int Index = (K-1);
   double FirstSlope = -C[Index-1][n-1]+C[Index][n-1];
@@ -97,39 +96,44 @@ int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName
 }
 
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-int **Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::GetM() const
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+int **Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::GetM() const
 {
   return M;
 }
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-double **Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::GetC() const
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+double **Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::GetC() const
 {
   return C;
 }
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-double **Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::GetPar() const
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+double **Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::GetPar() const
 {
   return Par;
 }
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::Getn() const
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::Getn() const
 {
   return n;
 }
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::GetK() const
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+int Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::GetK() const
 {
   return K;
 }
 
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::Segmentor()
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::Segmentor()
 {
   K = 0;
   C = NULL;
@@ -139,14 +143,16 @@ Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, Da
 }
 
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::Segmentor(Observations<DataTypeName> &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, SetTypeName *MS)
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::Segmentor(Observations<DataTypeName> &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, MultiSegment *MS)
 {
 	Initialize(yc, Kc, Mg, Mgam, MS);
 }
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::Initialize(Observations<DataTypeName> &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, SetTypeName *MS)
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::Initialize(Observations<DataTypeName> &yc, int Kc, FunctionTypeName Mg, FunctionTypeName Mgam, MultiSegment *MS)
 {
   K = Kc;
   n = yc.y.size();
@@ -176,8 +182,9 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeNam
 }
 
 
-template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::Initialize()
+
+template <typename SumOfFunctionsTypeName, typename FunctionTypeName, typename DataTypeName>
+void Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::Initialize()
 {
   SumOfFunctionsTypeName SumOfGammas;
   gamma.SpecializeMe(y[0]);
@@ -194,63 +201,58 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeNam
   for (int t = 0; t < n; t++)
     M[0][t] = -1;
 
-  // H is 2-dimensional because:
-  //    H[k][k][k] is initialized as H[k][k]
-  //    and H[k][tau][t] is computed thanks to H[k][tau][t - 1] and replaces it since it is no longer used.
-	// In H: first index is the number of break-points, the secon is the value of the breakpoint.
-  SumOfFunctionsTypeName *H;   // changed on aug 23rd 2011
+
+  SumOfFunctionsTypeName *H;   
   H = new SumOfFunctionsTypeName[n];
 
-  SetTypeName *S = new SetTypeName [n]; // changed on aug 23rd 2011
+  MultiSegment *S = new MultiSegment [n]; // changed on aug 23rd 2011
   // Same remark than for H
 
-  SetTypeName *I = new SetTypeName [n]; // changed on aug 23rd 2011
+  MultiSegment *I = new MultiSegment [1]; // changed on aug 23rd 2011
   // Same again for I
+	I[0].SetMe(MySet);
+	MyVector<int> *Candidates =new MyVector<int>[K];
 
-
-
-  MyVector<int> *Candidates =new MyVector<int>[K];
+  
   for (int k = 1; k < K; k++)  // k is the number of breakpoints.
   {
+  	Candidates[k].push_back(k-1);
     for (int j = 0; j < n; j++)
       S[j].SetMe(MySet);  // changed on aug 23rd 2011
-    for (int j = 0; j < n; j++)
-      I[j].SetMe(MySet); // Changed on august 23-rd.
+
     for (int i = 0; i < n; i++)
-      H[i].ResetMe();
-    Candidates[k].push_back(k-1);
+      H[i].ResetMe();  
     H[k - 1] = C[k-1][k-1];
     M[k][k] = k - 1;
     for (int t = k; t < n; t++)
     {
+      C[k][t] = PLUS_INFINITY; 
+      Par[k][t] = MINUS_INFINITY;
       MyVector<int> CandidatesToRemove;
+      I[0].SetMe(MySet);
       for (MyVector<int>::iterator Tau = Candidates[k].begin(); Tau != Candidates[k].end(); Tau++)
       {
         gamma.SpecializeMe(y[t]);
         H[*Tau] += gamma;
-        SetTypeName *Aux = H[*Tau].IsLowerThan(MySet, C[k-1][t]);
-        I[*Tau] = *Aux;
-        delete Aux;
-        S[*Tau].SelfIntersect(&(I[*Tau]));
+        MultiSegment *J = H[*Tau].IsLowerThan(MySet, C[k-1][t]);
+        I[0] = *J;
+				delete J;
+				
+        S[*Tau].SelfIntersect(&(I[0]));
         if (S[*Tau].AlmostEmpty())
-	    CandidatesToRemove.push_back(*Tau);
-      }
-      C[k][t] = PLUS_INFINITY; 
-      Par[k][t] = MINUS_INFINITY;
-      for (MyVector<int>::iterator Tau = Candidates[k].begin(); Tau != Candidates[k].end(); Tau++)
-	{
-	  S[t].SelfIntersectWithComplementary(&(I[*Tau]));
-	  SumOfFunctionsTypeName *Aux = H[*Tau]+g;
-	  double mi = Aux->Min(MySet);
-	  double par = Aux->ArgMin(MySet);
-	  delete Aux;
-	  if (mi < C[k][t])
-	    {
-	      C[k][t]= mi;
+			  	CandidatesToRemove.push_back(*Tau);
+				S[t].SelfIntersectWithComplementary(&(I[0]));
+				SumOfFunctionsTypeName *Aux = H[*Tau]+g;
+				double mi = Aux->Min(MySet);
+				double par = Aux->ArgMin(MySet);
+				delete Aux;
+				if (mi < C[k][t])
+				{
+				  C[k][t]= mi;
 	      Par[k][t]= par;
-	      M[k][t] = *Tau;
-	    }
-	}
+				  M[k][t] = *Tau;
+				}
+			}
 
       for (MyVector<int>::iterator CR = CandidatesToRemove.begin(); CR != CandidatesToRemove.end(); CR++)
         Candidates[k].remove(*CR);
@@ -262,14 +264,16 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, AtomicSetElementTypeNam
       }
     }
   }
+  
 
   delete[] H;
   delete[] S;
   delete[] I;
-  for (int i = 0; i < K; i++)
+    for (int i = 0; i < K; i++)
     Candidates[i].clear();
   delete[] Candidates;
-	
+
+  
 }
 
 
