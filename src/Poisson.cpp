@@ -57,10 +57,6 @@ void Poisson::SpecializeMe(int Y)
   S = Y;
   FirstElement = Y;
   FirstElementSpecified = true;
-  for(int i = 0; i < Y; i++)
-	{
-		A += log(i+1);
-	}
 }
 
 
@@ -131,12 +127,12 @@ double Poisson::ArgMin(Segment &Q)
     return Q.GetLeft();
 }
 
-double Poisson::Min(MultiSegment &S)
+double Poisson::Min(MultiSegment &MS)
 {
-  if (S.Empty())
+  if (MS.Empty())
     return PLUS_INFINITY;
   double Answer = PLUS_INFINITY;
-  for (MyVector<Segment>::iterator I = S.GetMySegments().begin(); I != S.GetMySegments().end(); I++)
+  for (MyVector<Segment>::iterator I = MS.GetMySegments().begin(); I != MS.GetMySegments().end(); I++)
   {
     Answer = std::min(Answer, Min(*I));
   }
@@ -161,14 +157,14 @@ double Poisson::ArgMin(MultiSegment &MS)
 
 double Poisson::Min()
 {
-  Segment S;
-  return (*this).Min(S);
+  Segment Q;
+  return (*this).Min(Q);
 }
 
 double Poisson::ArgMin()
 {
-  Segment S;
-  return (*this).ArgMin(S);
+  Segment Q;
+  return (*this).ArgMin(Q);
 }
 
 MultiSegment *Poisson::LowerThanZero(MultiSegment &MS)
@@ -252,19 +248,19 @@ MultiSegment *Poisson::LowerThanZero(MultiSegment &MS)
 	}
 }
 
-MultiSegment *Poisson::IsLowerThan(MultiSegment &S, double C)
+MultiSegment *Poisson::IsLowerThan(MultiSegment &MS, double C)
 {
   A = A - C;
-  MultiSegment *Answer = LowerThanZero(S);
+  MultiSegment *Answer = LowerThanZero(MS);
   A = A + C;
   return Answer;
 }
 
 MultiSegment *Poisson::IsLowerThan(double C)
 {
-  MultiSegment S;
+  MultiSegment MS;
   A = A - C;
-  MultiSegment *Answer = LowerThanZero(S);
+  MultiSegment *Answer = LowerThanZero(MS);
   A = A + C;
   return Answer;
 }

@@ -6,7 +6,7 @@
 }
 
 \usage{
-SelectModel(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
+SelectModel(x,penalty="oracle",seuil=n/log(n),keep=FALSE,greatjump=FALSE)
 }
 
 \arguments{
@@ -14,6 +14,7 @@ SelectModel(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
   \item{penalty}{An object of class string stating which penalty to use in the model selection criteria. Accepted penalties are BIC, AIC, Zhang's modified BIC: mBIC and oracle penalties: 'oracle'. In the case of Normal segmentation, criterion developed by Lebarbier, in the case of Poisson and Negative Binomial segmentation, criterion developed by Cleynen and Lebarbier. Default is oracle}
   \item{seuil}{If penalty='oracle', an Integer for the threshold to use for the slope heuristic. Default value is n/log(n) }
   \item{keep}{A Boolean stating whether or not to keep the values of the criterion. Default is FALSE.}
+  \item{greatjump}{If penalty is "oracle", a boolean stating whether to use the greatest jump (TRUE) or the threshold for the slope heuristic. Default is FALSE.}
 }
 
 \value{

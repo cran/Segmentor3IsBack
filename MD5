@@ -1,13 +1,13 @@
-7fc8fd68d789113a67d2a95ae8058204 *DESCRIPTION
+04652c2b09691ed645e43ae868b8ec85 *DESCRIPTION
 1e5450047b18ca8633e151de3d7ca002 *NAMESPACE
 6e0c5ccef9ad55aa68946480a4b59400 *R/Classes.R
-91608817d897bfb5503450d3fb02d01e *R/Segmentor3IsBack.R
-a86d448fe6298c0a7305b9774b85e481 *R/zzz.r
+c298f3df5cd88966d0b4ca339eaa9bd2 *R/Segmentor3IsBack.R
+c8fc51720bd308f6f5a119be22c96702 *R/zzz.r
 f8f5a5fa7639818d59e60b8be54a1ac5 *man/BestSegmentation.Rd
 75ccc05c171b1e6af10833cf803241ac *man/Segmentor-class.Rd
 1f504a64d0ff75fbac68c4d734c8634c *man/Segmentor.Rd
 bb404f7a94aa6e3f4f505cfccc625df1 *man/Segmentor3IsBack-package.Rd
-5df799061cc7ae839779124923e72ab9 *man/SelectModel.Rd
+9ffe65deb877c66bbbab3006943aae68 *man/SelectModel.Rd
 1b48276c09507a8f0dc91a37babae034 *man/getBreaks-methods.Rd
 4f05b17b39c507e14fb00fa0aaa45ba5 *man/getBreaks.Rd
 b087c9ad1f4695d198369f9e4f09ce13 *man/getCost-methods.Rd
@@ -29,7 +29,7 @@ e09047322e593634948bd64d434caf5d *man/getParameters-methods.Rd
 a18de820197c6c200c00a72fda82e8b0 *man/getPos-methods.Rd
 184cacc540e1ae75cd6f684eea92bace *man/getPos.Rd
 917771c0b3d0dd6d975c7b940fd5295e *man/show-methods.Rd
-30ae196d2277e575e0a6b331d37bca83 *src/BinNegative.cpp
+9946c8eb999428a484aa66ff57cf5569 *src/BinNegative.cpp
 20b0bcb274a5ed96b7cb1612bf882c41 *src/BinNegative.h
 42539581ad0b4375970d61c17af3c219 *src/CallSegmentor.cpp
 367c1782cad935173d79e79d4db14317 *src/CallSegmentor.h
@@ -43,7 +43,7 @@ f0037ef6a1a2ab84df6751371cd8441c *src/GeneralFunctionsDeclarations.h
 dcfe19999512b87cb3f41c765e6ae9fc *src/MyVector.h
 98fa2d20d4c1d5853e1b0cdea6c375f4 *src/Observations.cpp
 0fac2ce0271cf396a1e8a140817691b1 *src/Observations.h
-7efb3dad821fc5debdb358aa0d366122 *src/Poisson.cpp
+e8ce5b554b86e481dc21b7f9f1773d67 *src/Poisson.cpp
 a029ceba21030c003f93eab93495a72c *src/Poisson.h
 63aff489e097e449f4b344561c2b9050 *src/PrunedSeg.cc
 86cc2c376a30bf1ec4d213627278d361 *src/Segment.cpp
@@ -54,5 +54,5 @@ d370c63cf393edce545d5fbcf393158a *src/Sets.cpp
 8f9b45e8df02849c77436a4aa9cb1bdc *src/Sets.h
 a60ba63e8b87ae713931ddfea93290ad *src/Trinome.cpp
 171c2400d97fd0211764e6dcd8e747bd *src/Trinome.h
-40a8eab78faacf5c809294e96166d0fa *src/Variance.cpp
+7941d78dc0174a4e141155b6cb9331da *src/Variance.cpp
 362e95495c5536f80c5b970ef16ae3d9 *src/Variance.h

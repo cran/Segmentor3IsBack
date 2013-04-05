@@ -199,7 +199,7 @@ BestSegmentation <- function(x,K,t=numeric())
 	bestCost.res
 }
 
-SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
+SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE,greatjump=FALSE)
 {
 	if ((penalty!='BIC') & (penalty!='mBIC') & (penalty!='AIC') & (penalty!='oracle'))
 		stop("penalty must be BIC, mBIC, AIC or oracle")
@@ -246,12 +246,17 @@ SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
 		{
 			Kseq=1:Kmax
 			pen=Kseq*(1+4*sqrt(1.1+log(n/Kseq)))*(1+4*sqrt(1.1+log(n/Kseq)))
-			r1=saut(-getLikelihood(x)[Kseq],pen,Kseq)
-			crit1<-getLikelihood(x)[Kseq]+r1[2]*pen
-			r2=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
-			crit2<-getLikelihood(x)[Kseq]+r2[2]*pen
-			crit<-cbind(crit1,crit2)
-			K<-c(r1[1],r2[1])
+			if(greatjump)
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			} else
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			}
 		}	
 	} else if (getModel(x)=="Negative binomial")
 	{
@@ -265,12 +270,17 @@ SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
 		{
 			Kseq=1:Kmax
 			pen=Kseq*(1+4*sqrt(1.1+log(n/Kseq)))*(1+4*sqrt(1.1+log(n/Kseq)))
-			r1=saut(-getLikelihood(x)[Kseq],pen,Kseq)
-			crit1<-getLikelihood(x)[Kseq]+r1[2]*pen
-			r2=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
-			crit2<-getLikelihood(x)[Kseq]+r2[2]*pen
-			crit<-cbind(crit1,crit2)
-			K<-c(r1[1],r2[1])
+			if(greatjump)
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			} else
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			}
 		}	
 	} else if (getModel(x)=='Normal')
 	{
@@ -284,12 +294,17 @@ SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE)
 		{
 			Kseq=1:Kmax
 			pen=Kseq*(2*log(n/Kseq)+5)
-			r1=saut(-getLikelihood(x)[Kseq],pen,Kseq)
-			crit1<-getLikelihood(x)[Kseq]+r1[2]*pen
-			r2=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
-			crit2<-getLikelihood(x)[Kseq]+r2[2]*pen
-			crit<-cbind(crit1,crit2)
-			K<-c(r1[1],r2[1])
+			if(greatjump)
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			} else
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			}
 		}	
 	} else
 	{

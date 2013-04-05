@@ -275,10 +275,10 @@ MultiSegment *BinNegative::LowerThanZero(MultiSegment &MS)
 }
 
 
-MultiSegment *BinNegative::IsLowerThan(MultiSegment &S, double C)
+MultiSegment *BinNegative::IsLowerThan(MultiSegment &MS, double C)
 {
   A = A - C;
-  MultiSegment *Answer = LowerThanZero(S);
+  MultiSegment *Answer = LowerThanZero(MS);
   A = A + C;
   return Answer;
 }

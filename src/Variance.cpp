@@ -169,8 +169,8 @@ double Variance::Min()
 
 double Variance::ArgMin()
 {
-  Segment S;
-  return ArgMin(S);
+  Segment LS;
+  return ArgMin(LS);
 }
 
 
@@ -288,10 +288,10 @@ MultiSegment *Variance::LowerThanZero(MultiSegment &MS)
 }
 
 
-MultiSegment *Variance::IsLowerThan(MultiSegment &S, double C)
+MultiSegment *Variance::IsLowerThan(MultiSegment &LS, double C)
 {
   A = A - C;
-  MultiSegment *Answer = LowerThanZero(S);
+  MultiSegment *Answer = LowerThanZero(LS);
   A = A + C;
   return Answer;
 }
