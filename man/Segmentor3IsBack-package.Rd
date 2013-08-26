@@ -1,17 +1,18 @@
-\name{Segmentor-package}
-\alias{Segmentor-package}
+\name{Segmentor3IsBack-package}
+\alias{Segmentor3IsBack-package}
+\alias{Segmentor3IsBack}
 \docType{package}
 \title{
 Implementation of the Pruned Dynamic Programming Algorithm for the exact optimal segmentation of profiles
 }
 \description{
-Exact change-point algorithm for the segmentation of profiles according
+Exact change-point algorithm for the segmentation of profiles according to the log-likelihood criterion for 4 possible models: Poisson, Gaussian homoscedastic, negative binomial, Gaussian with constant mean.
 }
 \details{
 \tabular{ll}{
 Package: \tab Segmentor3IsBack\cr
 Type: \tab Package\cr
-Version: \tab 1.4 \cr
+Version: \tab 1.5 \cr
 Date: \tab 2013-03-25\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
@@ -27,7 +28,8 @@ Maintainer: Alice Cleynen <alice.cleynen@agroparistech.fr>
 \references{
   PDPA: Rigaill, G. Pruned dynamic programming for optimal multiple change-point detection: \emph{Submitted} \url{http://arxiv.org/abs/1004.0887}
 
-  PDPA: Cleynen, A. and Koskas, M. and Rigaill, G. A Generic Implementation of the Pruned Dynamic Programing Algorithm: \emph{Submitted} \url{http://arxiv.org/abs/1204.5564}
+  PDPA: Cleynen, A. and Koskas, M. and Lebarbier, E. and Rigaill, G. and Robin, S. Segmentor3IsBack: an R package for the fast and exact
+segmentation of Seq-data: \emph{Submitted} \url{http://arxiv.org/abs/1204.5564}
 
   overdispersion parameter: Johnson, N. and Kemps, A. and Kotz, S. (2005) Univariate Discrete Distributions: \emph{John Wiley & Sons} 
   
@@ -46,15 +48,25 @@ Maintainer: Alice Cleynen <alice.cleynen@agroparistech.fr>
 \keyword{segmentation}
 \keyword{exact}
 \keyword{counts}
-\keyword{sselection}
+\keyword{selection}
 \examples{
-N=2000 
-x=c(rnbinom(N,size=1.3,prob=0.7),rnbinom(N,size=1.3,prob=0.2),
-rnbinom(N,size=1.3,prob=0.01), rnbinom(N,size=1.3,prob=0.2),rnbinom(N,size=1.3,prob=0.8));
-res=Segmentor(data=x,model=3,Kmax=20);  
+N=1000 
+x=rnbinom(5*N, size=1.3, prob=rep(c(0.7,0.2,0.01,0.2,0.8),each=N))
+res=Segmentor(data=x, model=3, Kmax=20, keep=TRUE);  
 # Finds the optimal segmentation in up to 20 segments with respect to 
-#the negative binomial model.
-Cr<-SelectModel(res,penalty='oracle',keep=FALSE)
+#the negative binomial model, keeping cost matrix.
+Cr<-SelectModel(res, penalty='oracle', keep=FALSE)
 Cr
-#chooses the number of segments in the segmentation of x
+#chooses the number of segments in the segmentation of x, not keeping
+# values of constants for slope heuristic.
+Best<-BestSegmentation(res, K=Cr, t=2*N)
+matplot(Best$bestCost, type='l', lty=2)
+points(apply(Best$bestCost,2,which.min),apply(Best$bestCost,2,min),pch=20,col=1:(Cr-1))
+apply(Best$bestCost, 2, which.min)
+getBreaks(res)[Cr,1:(Cr-1)]
+#computes and plots cost of best segmentation in Cr segments with 
+#change-point t, and compares result with change-point estimates.
+Best$bestSeg
+#returns the optimal segmentation in Cr segments with t as a
+#change-point
 }

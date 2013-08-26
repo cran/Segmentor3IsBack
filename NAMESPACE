@@ -2,7 +2,8 @@ useDynLib(Segmentor3IsBack)
 exportPattern("^[[:alpha:]]+")
 
 export(	Segmentor,
-	SelectModel)
+	SelectModel,
+	BestSegmentation)
 
 exportClasses( Segmentor)
 
@@ -16,5 +17,6 @@ exportMethods(
 		getBreaks,
 		getParameters,
 		getLikelihood,
-		getCost
+		getCost,
+		getPos
 )
