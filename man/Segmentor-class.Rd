@@ -13,6 +13,7 @@
 \alias{Segmentor-method,getMean}
 \alias{Segmentor-method,getCost}
 \alias{Segmentor-method,getPos}
+\alias{Segmentor-method,getCompression}
 
 \title{Class "Segmentor"}
 \description{
@@ -38,6 +39,7 @@ Objects can be created by calls of the form \code{new("Segmentor", ...)}.
     \item{\code{likelihood}:}{Object of class \code{"matrix"}, the likelihood of the segmentation for each value of k}
     \item{\code{Cost}:}{Object of class \code{"matrix"}, the cost of the segmentation up to point j in i segments}
     \item{\code{Pos}:}{Object of class \code{"matrix"}, the last change-point location of the segmentation up to point j in i segments}
+    \item{\code{compression}:}{Object of class \code{"numeric"}, the value of the compression obtained prior to segmentation of the data}
   }
 }
 \section{Methods}{
@@ -52,6 +54,7 @@ Objects can be created by calls of the form \code{new("Segmentor", ...)}.
     \item{getCost}{\code{signature(object = "Segmentor")}: retrieves Cost slot }
     \item{getParameters}{\code{signature(object = "Segmentor")}: retrieves parameters slot }
     \item{getPos}{\code{signature(object = "Segmentor")}: retrieves Pos slot }
+    \item{getCompression}{\code{signature(object = "Segmentor")}: retrieves compression slot }
   }
 }
 

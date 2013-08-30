@@ -33,7 +33,7 @@ public:
   double operator()(const DataTypeName&, const AtomicSetElementTypeName &);
   double operator[](const AtomicSetElementTypeName& mu);  
   SetTypeName *IsLowerThan(SetTypeName &, double);
-  void SpecializeMe(DataTypeName Y);
+  void SpecializeMe(DataTypeName Y, int l);
 };
 
 template <typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
@@ -44,9 +44,9 @@ Function<AtomicSetElementTypeName, DataTypeName, SetTypeName>::Function()
 
 
 template <typename AtomicSetElementTypeName, typename DataTypeName, typename SetTypeName>
-void Function<AtomicSetElementTypeName, DataTypeName, SetTypeName>::SpecializeMe(DataTypeName Y)
+void Function<AtomicSetElementTypeName, DataTypeName, SetTypeName>::SpecializeMe(DataTypeName Y, int l)
 {
-  FirstElement = Y;
+  FirstElement = l* Y;
   FirstElementSpecified = true;
 }
 

@@ -66,10 +66,12 @@ public:
   MultiSegment *IsLowerThan( MultiSegment &, double);
   MultiSegment *IsLowerThan(double);
   void operator*=(double x);
+  void operator*=(int x);
   void operator+=(Trinome &Other);
   void operator+=(const double C);
   Trinome *operator+(Trinome &Other);
   Trinome *operator+(const double &C);
+  Trinome *operator*(const int &C);
 };
 
 

@@ -26,9 +26,10 @@ public:
   void ResetMe(int);
 
   void SpecializeMe(int);
-  double operator()(int, double);
+  double operator()(int,  double);
   double operator()(double);
   double operator[](double);
+  void operator*=(int x);
   Poisson operator=(const Poisson &Model)
   {
     FirstElementSpecified = Model.FirstElementSpecified;
@@ -51,6 +52,7 @@ public:
   void operator+=(const double &C);
   Poisson *operator+(const Poisson &Other);
   Poisson *operator+(const double &C);
+  Poisson *operator%(const int &C);
   double Min();
   double Min(Segment &S);
   double Min(MultiSegment &S);

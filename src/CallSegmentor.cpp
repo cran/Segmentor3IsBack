@@ -8,14 +8,18 @@
 #include "MyVector.h"
 
 
- void CallSegmentorPoisson(int *Size, int *KMax, int *Data, int *Breakpoints, double *Parameters, double *Likelihood)
+ void CallSegmentorPoisson(int *Size, int *KMax, int *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood)
   {
     int K= *KMax;
     int n = *Size;
     MyVector<int> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<int> LesObservations(MyData, true);
+		{
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<int> LesObservations(MyData, MyDataComp, true);
     Poisson MBg(0, 0, 0);
     Poisson MBgam(0, 0, 0);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
@@ -35,14 +39,18 @@
   return;
 }
 
- void CallSegmentorPoissonKeep(int *Size, int *KMax, int *Data, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
+ void CallSegmentorPoissonKeep(int *Size, int *KMax, int *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
   {
     int K= *KMax;
     int n = *Size;
     MyVector<int> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<int> LesObservations(MyData, true);
+		{
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<int> LesObservations(MyData, MyDataComp, true);
     Poisson MBg(0, 0, 0);
     Poisson MBgam(0, 0, 0);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
@@ -70,18 +78,22 @@
 }
 
 
- void CallSegmentorBinNeg(int *Size, int *KMax, double *theta, int *Data, int *Breakpoints, double *Parameters, double *Likelihood)
+ void CallSegmentorBinNeg(int *Size, int *KMax, double *theta, int *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood)
 {
     int K= *KMax;
     int n = *Size;
     double Theta = *theta;
+    bool b = true;
     MyVector<int> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<int> LesObservations(MyData, true);
-
-    BinNegative MBg(0, 0, 0);
-    BinNegative MBgam(0, 0, Theta);
+		{
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<int> LesObservations(MyData, MyDataComp, true);
+    BinNegative MBg(0, 0, 0, b);
+    BinNegative MBgam(0, 0, Theta, b);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
     MultiSegment S(Sp);
     Segmentor<BinNegative, BinNegative,  int> TheSegmentor(LesObservations, K, MBg, MBgam, &S);
@@ -99,18 +111,22 @@
   return;
 }
 
- void CallSegmentorBinNegKeep(int *Size, int *KMax, double *theta, int *Data, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
+ void CallSegmentorBinNegKeep(int *Size, int *KMax, double *theta, int *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
 {
     int K= *KMax;
     int n = *Size;
     double Theta = *theta;
+    bool b = true;
     MyVector<int> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<int> LesObservations(MyData, true);
-
-    BinNegative MBg(0, 0, 0);
-    BinNegative MBgam(0, 0, Theta);
+		{
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<int> LesObservations(MyData, MyDataComp, true);
+    BinNegative MBg(0, 0, 0,b);
+    BinNegative MBgam(0, 0, Theta,b);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
     MultiSegment S(Sp);
     Segmentor<BinNegative, BinNegative,  int> TheSegmentor(LesObservations, K, MBg, MBgam, &S);
@@ -135,14 +151,18 @@
   return;
 }
 
-void CallSegmentorNormal(int *Size, int *KMax, double *Data, int *Breakpoints, double *Parameters, double *Likelihood)
+void CallSegmentorNormal(int *Size, int *KMax, double *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood)
 {
     int K= *KMax;
     int n = *Size;
     MyVector<double> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<double> LesObservations(MyData);
+    {
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<double> LesObservations(MyData, MyDataComp);
     Trinome MBg(0, 0, 0);
     Trinome MBgam(0, 0, 0);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
@@ -161,14 +181,18 @@ void CallSegmentorNormal(int *Size, int *KMax, double *Data, int *Breakpoints, d
     }
 }
 
-void CallSegmentorNormalKeep(int *Size, int *KMax, double *Data, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int* Pos)
+void CallSegmentorNormalKeep(int *Size, int *KMax, double *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int* Pos)
 {
     int K= *KMax;
     int n = *Size;
     MyVector<double> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<double> LesObservations(MyData);
+    {
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<double> LesObservations(MyData, MyDataComp);
     Trinome MBg(0, 0, 0);
     Trinome MBgam(0, 0, 0);
     Segment Sp(LesObservations.MinData, LesObservations.MaxData);
@@ -194,15 +218,19 @@ void CallSegmentorNormalKeep(int *Size, int *KMax, double *Data, int *Breakpoint
     }
 }
 
-void CallSegmentorVariance(int *Size, int *KMax, double *Mmu, double *Data, int *Breakpoints, double *Parameters, double *Likelihood)
+void CallSegmentorVariance(int *Size, int *KMax, double *Mmu, double *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood)
 {
     int K= *KMax;
     int n = *Size;
     double mu = *Mmu;
     MyVector<double> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<double> LesObservations(MyData);
+    {
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<double> LesObservations(MyData, MyDataComp);
     Variance MVg(0, 0, 0,0);
     Variance MVgam(0, 0, 0, mu);
     double maax = std::max((LesObservations.MaxData-mu)*(LesObservations.MaxData-mu),(LesObservations.MinData-mu)*(LesObservations.MinData-mu));
@@ -222,15 +250,19 @@ void CallSegmentorVariance(int *Size, int *KMax, double *Mmu, double *Data, int 
     }
 }
 
-void CallSegmentorVarianceKeep(int *Size, int *KMax, double *Mmu, double *Data, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
+void CallSegmentorVarianceKeep(int *Size, int *KMax, double *Mmu, double *Data, int *DataComp, int *Breakpoints, double *Parameters, double *Likelihood, double *Cost, int *Pos)
 {
     int K= *KMax;
     int n = *Size;
     double mu = *Mmu;
     MyVector<double> MyData(n,0);
+    MyVector<int> MyDataComp(n,0);
     for (int i=0; i<n; i++)
-	MyData[i] = Data[i];
-    Observations<double> LesObservations(MyData);
+    {
+			MyData[i] = Data[i];
+			MyDataComp[i] = DataComp[i];
+		}
+    Observations<double> LesObservations(MyData, MyDataComp);
     Variance MVg(0, 0, 0,0);
     Variance MVgam(0, 0, 0, mu);
     double maax = std::max((LesObservations.MaxData-mu)*(LesObservations.MaxData-mu),(LesObservations.MinData-mu)*(LesObservations.MinData-mu));

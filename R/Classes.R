@@ -1,5 +1,5 @@
 setClass("Segmentor",
-         representation(data = "numeric", model = "character", breaks= "matrix", parameters="matrix", likelihood="matrix", Kmax="numeric", Cost="matrix", Pos = "matrix", mean="numeric", overdispersion="numeric"),
+         representation(data = "numeric", model = "character", breaks= "matrix", parameters="matrix", likelihood="matrix", Kmax="numeric", Cost="matrix", Pos = "matrix", mean="numeric", overdispersion="numeric",compression = "numeric"),
          prototype(model = "Poisson", Kmax=15),
 )
 
@@ -10,6 +10,8 @@ setMethod("show", "Segmentor",
 		print(object@model)
 		cat("\n Maximum number of segments: \n")
 		print(object@Kmax)
+		cat("\n Compression factor used: \n")
+		print(object@compression)
 		cat("\n Matrix of breakpoints: \n")
 		print(object@breaks)
 		cat("\n Parameter of each segment: \n")
@@ -116,6 +118,15 @@ setGeneric ("getParameters",
 setMethod("getParameters", "Segmentor",
 	function (object){
 	return ( object@parameters )
+	}
+)
+
+setGeneric ("getCompression",
+	function(object){ standardGeneric ("getCompression" )}
+)
+setMethod("getCompression", "Segmentor",
+	function (object){
+	return ( object@compression )
 	}
 )
 

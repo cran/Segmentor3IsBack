@@ -56,7 +56,7 @@ void Trinome::SpecializeMe(double Y)
   a0 = Y * Y;
 }
 
-double Trinome::operator()(double y, double mu)
+double Trinome::operator()(double y,  double mu)
 {
   return (y-mu) * (y - mu);
 }
@@ -132,6 +132,13 @@ double Trinome::ArgMin(MultiSegment &MS)
 }
 
 void Trinome::operator*=(double x)
+{
+  a0 *= x;
+  a1 *= x;
+  a2 *= x;
+}
+
+void Trinome::operator*=(int x)
 {
   a0 *= x;
   a1 *= x;
@@ -243,6 +250,16 @@ Trinome *Trinome::operator+(const double &C)
   (*Res).a0 = a0 + C;
   (*Res).a1 = a1;
   (*Res).a2 = a2;
+  (*Res).FirstElementSpecified = true;
+    return Res;
+}
+
+Trinome *Trinome::operator*(const int &C)
+{
+  Trinome *Res = new Trinome(0);
+  (*Res).a0 = a0 * C;
+  (*Res).a1 = a1 * C;
+  (*Res).a2 = a2 * C;
   (*Res).FirstElementSpecified = true;
     return Res;
 }

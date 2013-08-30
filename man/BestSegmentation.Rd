@@ -6,13 +6,14 @@
 }
 
 \usage{
-BestSegmentation(x,K,t=numeric())
+BestSegmentation(x,K,t=numeric(),compress=TRUE)
 }
 
 \arguments{
   \item{x}{An object of class Segmentor returned by function Segmentor}
   \item{K}{The number of segments of the segmentation for which the cost or best segmentation is wanted}
   \item{t}{The position for which the best segmentation with t as change-point is wanted}
+  \item{compress}{A boolean stating whether data should be compressed prior to segmentation}
 }
 
 \value{
@@ -49,7 +50,7 @@ res=Segmentor(data=x,model=3,Kmax=10, keep=TRUE);
 # Finds the optimal segmentation in up to 10 segments with respect to 
 #the negative binomial model.
 K<-3
-Best<-BestSegmentation(res,K=3,t=3000)
+Best<-BestSegmentation(res,K=3,t=3000,compress=FALSE)
 matplot(Best$bestCost, type='l', lty=2)
 points(apply(Best$bestCost,2,which.min),apply(Best$bestCost,2,min),pch=20,col=1:(K-1))
 apply(Best$bestCost, 2,which.min)
@@ -59,6 +60,10 @@ getBreaks(res)[K,1:(K-1)]
 Best$bestSeg
 #returns the optimal segmentation in 3 segments with 3000 as a
 #change-point
+Best<-BestSegmentation(res,K=3,t=3000,compress=TRUE)
+Best$bestSeg
+# this segmentation usually does not make sense because of the
+# compress option. t has to be adapted consequently
 }
 
 

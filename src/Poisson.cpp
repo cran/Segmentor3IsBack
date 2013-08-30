@@ -25,9 +25,9 @@ Poisson::Poisson(double a, double b, double s)
   ResetMe(a, b, s);
 }
 
-Poisson::Poisson(int n)
+Poisson::Poisson(int y)
 {
-  ResetMe(n);
+  ResetMe(y);
 }
 
 void Poisson::ResetMe()
@@ -44,23 +44,23 @@ void Poisson::ResetMe(double a, double b, double s)
   FirstElementSpecified = true;
 }
 
-void Poisson::ResetMe(int n)
+void Poisson::ResetMe(int y)
 {
-  SpecializeMe(n);
+  SpecializeMe(y);
 }
 
 
-void Poisson::SpecializeMe(int Y)
+void Poisson::SpecializeMe(int y)
 {
   A=0;
   B = 1;
-  S = Y;
-  FirstElement = Y;
+  S = y;
+  FirstElement = y;
   FirstElementSpecified = true;
 }
 
 
-double Poisson::operator()(int y, double mu)
+double Poisson::operator()(int y,  double mu)
 {
   if (mu != 0)
     return A + mu - y * log(mu);
@@ -110,7 +110,7 @@ double Poisson::Min(Segment &Q)
 
 double Poisson::ArgMin(Segment &Q)
 {
-  double Res = 0;
+  //double Res = 0;
   if((*this).B != 0)
   {
     if ((*this).S !=0)
@@ -297,5 +297,21 @@ Poisson *Poisson::operator+(const double &C)
   return Res;
 }
 
+Poisson *Poisson::operator%(const int &C)
+{
+  Poisson *Res = new Poisson((*this).A, (*this).B, (*this).S);
+  (*Res).A *= C;
+  (*Res).B *= C;
+  (*Res).S *= C;
+  (*Res).FirstElementSpecified=true;
+  return Res;
+}
+
+void Poisson::operator*=(int x)
+{
+  A *= x;
+  S *= x;
+  B *= x;
+}
 
 

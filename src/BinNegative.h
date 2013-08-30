@@ -16,11 +16,11 @@ public:
   double T;
   double S;
   BinNegative();
-  BinNegative(double y, int n);
-  BinNegative(double a, double s, double t);
+  BinNegative(double t, int y);
+  BinNegative(double a, double s, double t, bool b=true);
   void ResetMe();
-  void ResetMe(double y, int n);
-  void ResetMe(double a, double s, double t);
+  void ResetMe(double t, int y);
+  void ResetMe(double a, double s, double t, bool b);
 
 
   void SpecializeMe(int);
@@ -48,8 +48,10 @@ public:
   }
   BinNegative  *operator+(BinNegative &Other);
   BinNegative  *operator+(const double &C);
+  BinNegative  *operator*(const int &C);
   void operator+=(BinNegative &Other);
   void operator+=(const double &C);
+  void operator*=(int x);
   double Min();
   double Min(Segment &S);
   double Min(MultiSegment &S);

@@ -19,14 +19,14 @@ BinNegative::BinNegative()
 }
 
 
-BinNegative::BinNegative(double t, int Y)
+BinNegative::BinNegative(double t, int y)
 {
-  ResetMe(t, Y);
+  ResetMe(t, y);
 }
 
-BinNegative::BinNegative(double a, double s, double t)
+BinNegative::BinNegative(double a, double s, double t, bool b)
 {
-  ResetMe(a, s, t);
+  ResetMe(a, s, t, b);
 }
 
 void BinNegative::ResetMe()
@@ -39,16 +39,16 @@ void BinNegative::ResetMe()
 }
 
 
-void BinNegative::ResetMe(double t, int Y)
+void BinNegative::ResetMe(double t, int y)
 {
   A = 0;
   T = t;
-  S = Y;
-  FirstElement = Y;
+  S = y;
+  FirstElement = y;
   FirstElementSpecified = true;
 }
 
-void BinNegative::ResetMe(double a, double s, double t)
+void BinNegative::ResetMe(double a, double s, double t, bool b)
 {
   A=a;
   T = t;
@@ -76,6 +76,16 @@ BinNegative *BinNegative::operator+(const double &C)
   return Res;
 }
 
+BinNegative *BinNegative::operator*(const int &C)
+{
+  BinNegative *Res = new BinNegative;
+  Res->A = (*this).A * C ;
+  Res->S = (*this).S *C;
+  Res->T = (*this).T *C;
+  (*Res).FirstElementSpecified = true;
+  return Res;
+}
+
 void BinNegative::operator+=(const double &C)
 {
   A += C;
@@ -91,16 +101,17 @@ void BinNegative::operator+=(BinNegative &Other)
 }
 
 
-void BinNegative::SpecializeMe(int Y)
+void BinNegative::SpecializeMe(int y)
 {
   A = 0;
-  S = Y;
+  S = y;
+  T = T;
   FirstElementSpecified = true;
 
 }
 
 
-double BinNegative::operator()(int y, double mu)
+double BinNegative::operator()(int y,  double mu)
 {
   double Ap = 0;
   if (mu == 0)
@@ -283,6 +294,12 @@ MultiSegment *BinNegative::IsLowerThan(MultiSegment &MS, double C)
   return Answer;
 }
 
+void BinNegative::operator*=(int x)
+{
+  A *= x;
+  S *= x;
+  T *= x;
+}
 
 
 

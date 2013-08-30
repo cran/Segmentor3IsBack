@@ -33,6 +33,7 @@ public:
   double operator()(double);
   double operator()(double,double);
   double operator[](double);
+  void operator*=(int x);
   MultiSegment *LowerThanZero(MultiSegment &);
   Variance operator=(const Variance &Model)
   {
@@ -56,6 +57,7 @@ public:
   }
   Variance  *operator+(Variance &Other);
   Variance  *operator+(const double &C);
+  Variance  *operator*(const int &C);
   void operator+=(Variance &Other);
   void operator+=(const double &C);
   double Min();

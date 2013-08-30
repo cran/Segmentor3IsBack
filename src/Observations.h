@@ -29,13 +29,14 @@ class Observations
 {
 public:
   MyVector<T> y;
+  MyVector<int> l;
   T MinData;
   T MaxData;
   double Mean;
   double Var;
   Observations();
-  Observations(MyVector<T> &v);
-  Observations(MyVector<int> &v, bool t=true);
+  Observations(MyVector<T> &v, MyVector<int> &ml);
+  Observations(MyVector<int> &v, MyVector<int> &ml, bool t=true);
   void MeanVarSubsection(int start, int end, double* m, double* v);
   void ComputeMinMax();
   void ComputeMeanVar();
@@ -71,14 +72,18 @@ void Observations<T>::MeanVarSubsection(int start, int end, double* m, double* v
 		*v = 0;
 		return;
 	}
-  int length = end-start;
+  //int length = end-start;
+  int length = 0;
   T Sum = 0;
   double Square = 0;
   for (int i = start; i < end; i++)
-    Sum += y[i];
+  {
+  	length += l[i];
+    Sum += y[i]*l[i];
+  }
   *m = ((double) Sum)/((double) length);
   for (int i=start; i<end; i++)
-    Square += (y[i]-*m)*(y[i]-*m);
+    Square += l[i]*(y[i]-*m)*(y[i]-*m);
   *v = Square /(length-1);
 }
 
@@ -93,13 +98,17 @@ void Observations<T>::ComputeMeanVar()
 	}
   Mean = 0;
   Var = 0;
+  int tl = 0;
   int n = y.size();
   for (int i = 0; i < n; i++)
+  {
+  	tl += l[i];
     Mean += y[i];
-  Mean /= n;
+  }  
+  Mean /= tl;
   for (int i=0; i<n; i++)
-    Var += (y[i]-Mean)*(y[i]-Mean);
-  Var /= (n-1);
+    Var += l[i]*(y[i]-Mean)*(y[i]-Mean);
+  Var /= (tl-1);
 }
 
 
@@ -110,18 +119,23 @@ Observations<T>::Observations()
 }
 
 template<typename T>
-Observations<T>::Observations(MyVector<T> &v)
+Observations<T>::Observations(MyVector<T> &v, MyVector<int> &ml)
 {
   y = v;
+  l = ml;
   ComputeMinMax();
   ComputeMeanVar();
 }
 template<typename T>
-Observations<T>::Observations(MyVector<int> &v, bool t)
+Observations<T>::Observations(MyVector<int> &v, MyVector<int> &ml, bool t)
 {
   y.clear();
+  l.clear();
   for (int i=0; i<v.size(); i++)
+  {
     y.push_back(v[i]);
+    l.push_back(ml[i]);
+  }  
   ComputeMinMax();
   ComputeMeanVar();
 }

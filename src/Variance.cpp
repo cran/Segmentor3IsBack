@@ -97,6 +97,17 @@ Variance *Variance::operator+(const double &C)
   return Res;
 }
 
+Variance *Variance::operator*(const int &C)
+{
+  Variance *Res = new Variance;
+  Res->A = (*this).A * C ;
+  Res->S = (*this).S * C;
+  Res->T = (*this).T * C;
+  Res->mu = (*this).mu ;
+  (*Res).FirstElementSpecified = true;
+  return Res;
+}
+
 void Variance::operator+=(const double &C)
 {
   A += C;
@@ -294,6 +305,13 @@ MultiSegment *Variance::IsLowerThan(MultiSegment &LS, double C)
   MultiSegment *Answer = LowerThanZero(LS);
   A = A + C;
   return Answer;
+}
+
+void Variance::operator*=(int x)
+{
+  A *= x;
+  S *= x;
+  T *= x;
 }
 
 

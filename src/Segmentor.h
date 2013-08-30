@@ -31,6 +31,7 @@ class Segmentor
 private:
   int K;
   MyVector<DataTypeName> y;
+  MyVector<int> datasiz;
   double **C;
   double **Par;
   int **M;
@@ -74,6 +75,7 @@ Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::~Segmentor()
     delete[] Par[j];
   delete[] Par;
 	y.clear();
+	datasiz.clear();
 }
 
 
@@ -157,6 +159,7 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName, DataTypeName>::Initiali
   K = Kc;
   n = yc.y.size();
 	y = yc.y;
+	datasiz = yc.l;
   C = new double *[K];
   for (int i = 0; i < K; i++)
     C[i] = new double[n];
@@ -188,13 +191,17 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::Initial
 {
   SumOfFunctionsTypeName SumOfGammas;
   gamma.SpecializeMe(y[0]);
-  SumOfGammas = gamma;
+  SumOfFunctionsTypeName Aux = gamma;
+  Aux *= datasiz[0];
+  SumOfGammas = Aux;
   C[0][0] = (SumOfGammas.Min(MySet));
   Par[0][0] = (SumOfGammas.ArgMin(MySet));
   for (int t = 1; t < n; t++)
   {
     gamma.SpecializeMe(y[t]);
-    SumOfGammas += gamma;
+    Aux = gamma;
+    Aux *= datasiz[t];
+    SumOfGammas += Aux;
     C[0][t] = (SumOfGammas.Min(MySet));
     Par[0][t] = (SumOfGammas.ArgMin(MySet));
   }
@@ -233,7 +240,9 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::Initial
       for (MyVector<int>::iterator Tau = Candidates[k].begin(); Tau != Candidates[k].end(); Tau++)
       {
         gamma.SpecializeMe(y[t]);
-        H[*Tau] += gamma;
+        Aux = gamma;
+        Aux *= datasiz[t];
+        H[*Tau] += Aux;
         MultiSegment *J = H[*Tau].IsLowerThan(MySet, C[k-1][t]);
         I[0] = *J;
 				delete J;

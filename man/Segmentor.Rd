@@ -9,7 +9,7 @@
 
 \usage{
 Segmentor(data=numeric(), model=1, Kmax = 15, phi = numeric(), 
-m = numeric(), keep=FALSE)
+m = numeric(), keep=FALSE, compress = TRUE)
 }
 
 \arguments{
@@ -19,6 +19,7 @@ m = numeric(), keep=FALSE)
   \item{phi}{Needed only for the Negative Binomial distribution: the value of the inverse of the overdispersion parameter. If the user does not enter a value, the package uses a modified version of Johnson and Kotz's estimator where the mean is replaced by the median. }
   \item{m}{Needed only for Normal Heteroscedastic distribution: the value of the constant mean. If not entered, the function uses the empirical mean of the data.}
   \item{keep}{a boolean stating whether or not to keep Cost and Position matrices}
+  \item{compress}{A boolean stating whether data should be compressed prior to segmentation}
 }
 
 \value{
@@ -31,6 +32,7 @@ m = numeric(), keep=FALSE)
   \item{Pos}{Matrix of size Kmax x n containing the last change-point location of the segmentation of signal up to point j in i segments} 
   \item{overdispersion}{only if model = Negative Binomial, the value of the inverse of overdispersion used for the segmentation}
   \item{mean}{only if model = Normal Heteroscedastic, the value of the mean used for the segmentation}
+  \item{compression}{The value of the compression factor used (compression>=1)}
 }
 
 
@@ -76,10 +78,10 @@ res=Segmentor(data=x,Kmax=3);
 #the Poisson model.
 
 y=c(rnbinom(N,prob=0.3,size=0.15),rnbinom(2*N,prob=0.1,size=0.15),
-rnbinom(N,prob=0.6,size=0.15))
+rnbinom(N,prob=0.6,size=0.15),compress=FALSE)
 res2=Segmentor(y, model=3,Kmax=10); 
 #Finds the optimal segmentation in 1 to 10 segments with respect to 
-#the Negative Binomial model.
+#the Negative Binomial model, without compression of data.
 }
 
 
