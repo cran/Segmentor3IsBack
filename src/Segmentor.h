@@ -249,7 +249,9 @@ void Segmentor<SumOfFunctionsTypeName, FunctionTypeName,  DataTypeName>::Initial
 				
         S[*Tau].SelfIntersect(&(I[0]));
         if (S[*Tau].AlmostEmpty())
+        {
 			  	CandidatesToRemove.push_back(*Tau);
+			  }	
 				S[t].SelfIntersectWithComplementary(&(I[0]));
 				SumOfFunctionsTypeName *Aux = H[*Tau]+g;
 				double mi = Aux->Min(MySet);

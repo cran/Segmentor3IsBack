@@ -6,7 +6,7 @@
 Implementation of the Pruned Dynamic Programming Algorithm for the exact optimal segmentation of profiles
 }
 \description{
-Exact change-point algorithm for the segmentation of profiles according to the log-likelihood criterion for 4 possible models: Poisson, Gaussian homoscedastic, negative binomial, Gaussian with constant mean.
+Exact change-point algorithm for the segmentation of profiles according to the log-likelihood criterion for 5 possible models: Poisson, Gaussian homoscedastic, negative binomial, Gaussian with constant mean and Exponential.
 }
 \details{
 \tabular{ll}{
@@ -28,14 +28,14 @@ Maintainer: Alice Cleynen <alice.cleynen@agroparistech.fr>
 \references{
   PDPA: Rigaill, G. Pruned dynamic programming for optimal multiple change-point detection: \emph{Submitted} \url{http://arxiv.org/abs/1004.0887}
 
-  PDPA: Cleynen, A. and Koskas, M. and Lebarbier, E. and Rigaill, G. and Robin, S. Segmentor3IsBack: an R package for the fast and exact
-segmentation of Seq-data: \emph{Submitted} \url{http://arxiv.org/abs/1204.5564}
+  PDPA: Cleynen, A. and Koskas, M. and Lebarbier, E. and Rigaill, G. and Robin, S. Segmentor3IsBack (2014): an R package for the fast and exact
+segmentation of Seq-data \emph{Algorithms for Molecular Biology}
 
   overdispersion parameter: Johnson, N. and Kemps, A. and Kotz, S. (2005) Univariate Discrete Distributions: \emph{John Wiley & Sons} 
   
   variance parameter: Hall, P. and Kay, J. and Titterington, D. (1990): Asymptotically optimal difference-based estimation of variance in non-parametric regression \emph{Biometrika}
   
-  Selection criterion for counts: Cleynen, A. and Lebarbier, E. Segmentation of the Poisson and negative binomial rate models: a penalized estimator: \emph{Submitted} \url{http://arxiv.org/abs/1301.2534}
+  Selection criterion for counts: Cleynen, A. and Lebarbier, E. (2014) Segmentation of the Poisson and negative binomial rate models: a penalized estimator: \emph{Esaim : Probability and Statistics} 
   
   Selection criterion for Gaussian distribution: Lebarbier, E. (2005) Detecting multiple change-points in the mean of Gaussian process by model selection: \emph{Signal Processing}
   

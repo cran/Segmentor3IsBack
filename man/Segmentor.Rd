@@ -4,27 +4,28 @@
 \alias{Segmentor.default}
 \title{Segmentor}
 \description{
-  The functions are used for change-point problems. Given a loss function (Poisson, Normal homoscedastic, Negative Binomial or Normal Heteroscedastic (with given constant mean)), the function Segmentor estimates the optimal segmentation with respect to the log-likelihood. The Segmentor gives estimates of the breakpoint locations as well as the loss function parameter of each segment.
+  The functions are used for change-point problems. Given a loss function (Poisson, Normal homoscedastic, Negative Binomial, Normal Heteroscedastic (with given constant mean) or Exponential), the function Segmentor estimates the optimal segmentation with respect to the log-likelihood. The Segmentor gives estimates of the breakpoint locations as well as the loss function parameter of each segment.
 }
 
 \usage{
 Segmentor(data=numeric(), model=1, Kmax = 15, phi = numeric(), 
-m = numeric(), keep=FALSE, compress = TRUE)
+m = numeric(), keep=FALSE, bounds=c(0,0), compress = TRUE)
 }
 
 \arguments{
   \item{data}{A vector of observations to be segmented. Must have no missing values.}
-  \item{model}{Integer between 1 and 4 giving the modelisation of the observed data, 1: poisson (default), 2: normal-homoscedastic, 3: negative binomial or 4: normal-heteroscedastic}
-  \item{Kmax}{The maximum number of segments wanted for the data. The Segmentor will find all optimal segmentations in 1 to Kmax segments.}
+  \item{model}{Integer between 1 and 4 giving the modelisation of the observed data, 1: poisson (default), 2: normal-homoscedastic, 3: negative binomial, 4: normal-heteroscedastic or 5: exponential}
+  \item{Kmax}{The maximum number oe segments wanted for the data. The Segmentor will find all optimal segmentations in 1 to Kmax segments.}
   \item{phi}{Needed only for the Negative Binomial distribution: the value of the inverse of the overdispersion parameter. If the user does not enter a value, the package uses a modified version of Johnson and Kotz's estimator where the mean is replaced by the median. }
   \item{m}{Needed only for Normal Heteroscedastic distribution: the value of the constant mean. If not entered, the function uses the empirical mean of the data.}
   \item{keep}{a boolean stating whether or not to keep Cost and Position matrices}
+  \item{bounds}{optional lower and upper bounds on the parameter to segment : will fasten the pruning and hence the algorithm if some values are not allowed (e.g. non negative numbers for Poisson distribution)}
   \item{compress}{A boolean stating whether data should be compressed prior to segmentation}
 }
 
 \value{
 	\item{data}{The vector of observations to be segmented.} 
-  \item{model}{Emission distribution (Poisson, Normal Homoscedastic, Negative Binomial or Normal Heteroscedastic)} 
+  \item{model}{Emission distribution (Poisson, Normal Homoscedastic, Negative Binomial or Normal Heteroscedastic or exponential)} 
   \item{breaks}{Matrix of size Kmax*Kmax of estimated change-point locations for each optimal segmentation in 1 to Kmax segments.}
   \item{parameters}{Matrix of size Kmax*Kmax which elements are the estimated parameters for each segment of the optimal segmentation. If model is Poisson or Normal, the parameter corresponds to the mean of the signal in each segment. If model is Negative binomial, the parameter corresponds to the success-probability of the signal in each segment. If model is normal heteroscedastic, the parameter is the variance assuming known mean.} 
   \item{likelihood}{Vector of size Kmax of resulting negative log-likelihood for each optimal segmentation.}
@@ -40,8 +41,8 @@ m = numeric(), keep=FALSE, compress = TRUE)
 \references{
   PDPA: Rigaill, G. Pruned dynamic programming for optimal multiple change-point detection: \emph{Submitted} \url{http://arxiv.org/abs/1004.0887}
 
-  PDPA: Cleynen, A. and Koskas, M. and Lebarbier, E. and Rigaill, G. and Robin, S. Segmentor3IsBack: an R package for the fast and exact
-segmentation of Seq-data: \emph{Submitted} \url{http://arxiv.org/abs/1204.5564}
+  PDPA: Cleynen, A. and Koskas, M. and Lebarbier, E. and Rigaill, G. and Robin, S. Segmentor3IsBack (2014): an R package for the fast and exact
+segmentation of Seq-data \emph{Algorithms for Molecular Biology}
 
   overdispersion parameter: Johnson, N. and Kemps, A. and Kotz, S. (2005) Univariate Discrete Distributions: \emph{John Wiley & Sons} 
   

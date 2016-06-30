@@ -107,7 +107,7 @@ template <typename FunctionTypeName, typename AtomicSetElementTypeName, typename
 SumOfFunctions<FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName> & SumOfFunctions<FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName>::operator=(SumOfFunctions<FunctionTypeName, AtomicSetElementTypeName, DataTypeName, SetTypeName> &Other)
 {
   if (this == &Other)
-    return;
+    return *this;
   MyFunctions.clear();
   for(typename MyVector<FunctionTypeName>::iterator I = Other.MyFunctions.begin(); I != Other.MyFunctions.end(); I++)
     MyFunctions.push_back(*I);

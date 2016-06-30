@@ -21,3 +21,11 @@ exportMethods(
 		getPos,
 		getCompression
 )
+
+import("methods")
+importFrom("methods",show)
+importFrom("stats", "median")
+importFrom("utils", "str")
+ 
+S3method(print, Segmentor)
+S3method(Segmentor, default)

@@ -1,9 +1,9 @@
-Segmentor<- function(data=numeric(), model=1, Kmax = 15, phi = numeric(), m = numeric(), keep=FALSE, compress = TRUE) UseMethod("Segmentor")
+Segmentor<- function(data=numeric(), model=1, Kmax = 15, phi = numeric(), m = numeric(), keep=FALSE, bounds=c(0,0), compress = TRUE) UseMethod("Segmentor")
 
-Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric(), m = numeric(), keep=FALSE, compress = TRUE)
+Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric(), m = numeric(), keep=FALSE, bounds=c(0,0), compress = TRUE)
 {
-  if ((model!=1)&(model!=2)&(model!=3)&(model!=4))
-    stop("Choose model=1 (Poisson), 2 (normal), 3 (Negative Binomial) or 4 (Normal-Variance)")
+  if ((model!=1)&(model!=2)&(model!=3)&(model!=4)&(model!=5))
+    stop("Choose model=1 (Poisson), 2 (normal), 3 (Negative Binomial), (Normal-Variance) or 5 (Exponential)")
   if (length(data)==0)
     stop("Give me a vector of data to segment")
 
@@ -27,6 +27,8 @@ Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric()
   likelihood=rep(0, Kmax)
   likelihood=as.vector(likelihood)
   compression<-n/n2
+  if (model==5)
+  	dat=dat
   if ((model==4) & (length(m)==0))
 	m = mean(data)
   if ((model==3) & (length(phi)==0))
@@ -50,10 +52,11 @@ Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric()
   if(!keep)
   {
 		if (model==1)
-			Rep<-.C("SegmentPoisson", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.integer(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), PACKAGE="Segmentor3IsBack") else if (model==3)
-			Rep<-.C("SegmentBinNeg", Size = as.integer(n2),KMax = as.integer(Kmax), theta = as.double(phi), Data = as.integer(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack") else if (model==2)
-			Rep<-.C("SegmentNormal", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack") else if (model==4)
-			Rep<-.C("SegmentVariance", Size = as.integer(n2),KMax = as.integer(Kmax), mu = as.double(m), Data = as.double(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack")
+			Rep<-.C("SegmentPoisson", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.integer(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), PACKAGE="Segmentor3IsBack") else if (model==5)
+			Rep<-.C("SegmentExponential", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), PACKAGE="Segmentor3IsBack") else if (model==3)
+			Rep<-.C("SegmentBinNeg", Size = as.integer(n2),KMax = as.integer(Kmax), theta = as.double(phi), Data = as.integer(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack") else if (model==2)
+			Rep<-.C("SegmentNormal", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack") else if (model==4)
+			Rep<-.C("SegmentVariance", Size = as.integer(n2),KMax = as.integer(Kmax), mu = as.double(m), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood),  PACKAGE="Segmentor3IsBack")
 	} else
 	{
 		  cost=matrix(0,nrow=Kmax,ncol=n2)
@@ -61,10 +64,11 @@ Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric()
   		pos=matrix(0,nrow=Kmax,ncol=n2)
   		pos=as.vector(pos)
 		if (model==1)
-			Rep<-.C("SegmentPoissonKeep", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.integer(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==3)
-			Rep<-.C("SegmentBinNegKeep", Size = as.integer(n2),KMax = as.integer(Kmax), theta = as.double(phi), Data = as.integer(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==2)
-			Rep<-.C("SegmentNormalKeep", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==4)
-			Rep<-.C("SegmentVarianceKeep", Size = as.integer(n2),KMax = as.integer(Kmax), mu = as.double(m), Data = as.double(dat), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack")	
+			Rep<-.C("SegmentPoissonKeep", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.integer(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==5)
+			Rep<-.C("SegmentExponentialKeep", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==3)
+			Rep<-.C("SegmentBinNegKeep", Size = as.integer(n2),KMax = as.integer(Kmax), theta = as.double(phi), Data = as.integer(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==2)
+			Rep<-.C("SegmentNormalKeep", Size = as.integer(n2),KMax = as.integer(Kmax), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack") else if (model==4)
+			Rep<-.C("SegmentVarianceKeep", Size = as.integer(n2),KMax = as.integer(Kmax), mu = as.double(m), Data = as.double(dat), SegBounds=as.double(bounds), DataComp = as.integer(datasize), Breakpoints = as.integer(breaks), Parameters = as.double(parameters), Likelihood = as.double(likelihood), Cost = as.double(cost), Pos = as.integer(pos), PACKAGE="Segmentor3IsBack")	
 			cost = matrix(Rep$Cost,ncol=Kmax)
  		  cost = t(cost)
     	pos = matrix(Rep$Pos,ncol=Kmax)
@@ -90,6 +94,12 @@ Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric()
 		{
 		    model.dist="Poisson"
 		    likelihood=likelihood+sum(lgamma(data+1))
+		    Segmentor.res=new("Segmentor", data=data, model=model.dist, breaks=breaks, parameters=parameters, likelihood=likelihood, Kmax=Kmax, compression=compression)
+		}
+		if (model==5) 
+		{
+		    model.dist="Exponential"
+		    likelihood=likelihood
 		    Segmentor.res=new("Segmentor", data=data, model=model.dist, breaks=breaks, parameters=parameters, likelihood=likelihood, Kmax=Kmax, compression=compression)
 		}
 		if (model==2) 
@@ -123,6 +133,12 @@ Segmentor.default <-function(data=numeric(), model=1, Kmax = 15, phi = numeric()
 		{
 		    model.dist="Poisson"
 		    likelihood=likelihood+sum(lgamma(data+1))
+		    Segmentor.res=new("Segmentor", data=data, model=model.dist, breaks=breaks, parameters=parameters, likelihood=likelihood, Kmax=Kmax, Cost=cost, Pos=pos, compression=compression)
+		}
+		if (model==5) 
+		{
+		    model.dist="Exponential"
+		    likelihood=likelihood
 		    Segmentor.res=new("Segmentor", data=data, model=model.dist, breaks=breaks, parameters=parameters, likelihood=likelihood, Kmax=Kmax, Cost=cost, Pos=pos, compression=compression)
 		}
 		if (model==2) 
@@ -169,7 +185,7 @@ BestSegmentation <- function(x,K,t=numeric(),compress=TRUE)
 	n<-length(getData(x))
 	data<-getData(x)
 	s<-getModel(x)
-	if (s=="Poisson") mod=1 else if (s=="Normal") mod=2 else if (s=="Negative binomial") mod=3 else if (s=="Variance Segmentation") mod=4
+	if (s=="Poisson") mod=1 else if (s=="Normal") mod=2 else if (s=="Negative binomial") mod=3 else if (s=="Variance Segmentation") mod=4 else if (s=="Exponential") mod=5
 	if (K<=getKmax(x))
 	{
 		c<-getCompression(x)
@@ -177,7 +193,7 @@ BestSegmentation <- function(x,K,t=numeric(),compress=TRUE)
 		dat<-data2$values
 		datasize<-data2$lengths
 		n2 = length(dat)
-		if (compress & (c==1) &(n2<n))
+		if (compress & (c==as.double(1)) &(n2<n))
 		{		
 			warning('Warning: Segmentor was applied with compression = FALSE, will apply new Segmentor with compression = TRUE')
 			resForward <- Segmentor(data, model=mod, Kmax=K, phi=getOverdispersion(x), m=getMean(x), keep=TRUE, compress = compress)		
@@ -292,6 +308,30 @@ SelectModel <-function(x,penalty="oracle",seuil=n/log(n),keep=FALSE,greatjump=FA
 				K<-K[1]
 			}
 		}	
+	} else if (getModel(x)=="Exponential")
+	{
+		if(penalty=='mBIC')
+			stop("no mBIC for Exponential model")
+		if (penalty=='BIC')
+			K<-which.min(getLikelihood(x)+((1:Kmax)+1)*log(n))
+		if (penalty=='AIC')
+			K<-which.min(getLikelihood(x)+((1:Kmax)+1)*2)	
+		if (penalty=='oracle')
+		{
+			Kseq=1:Kmax
+			pen=Kseq*(1+4*sqrt(1.1+log(n/Kseq)))*(1+4*sqrt(1.1+log(n/Kseq)))
+			if(greatjump)
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			} else
+			{
+				K=saut(-getLikelihood(x)[Kseq],pen,Kseq,seuil,biggest=FALSE)
+				crit<-getLikelihood(x)[Kseq]+K[2]*pen
+				K<-K[1]
+			}
+		}	
 	} else if (getModel(x)=="Negative binomial")
 	{
 		if(penalty=='mBIC')
@@ -385,6 +425,8 @@ print.Segmentor <-function(x,...)
     cat("\n Table of parameters: ")
     if (getModel(x)=="Poisson")
       cat("(mean of the signal in each segment) \n")
+    if (getModel(x)=="Exponential")
+      cat("(Inverse mean of the signal in each segment) \n")
     if (getModel(x)=="Normal")
       cat("(mean of the signal in each segment) \n")
     if (getModel(x)=="Negative binomial")
